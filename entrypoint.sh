@@ -29,8 +29,14 @@ is_on_branch() {
 REVISION=${1:-`git rev-parse HEAD~1`}
 BRANCH=${2:-main}
 
+echo "Adding the safe directory..."
+git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+
 cd "${GITHUB_WORKSPACE}"
+echo "BEFORE GIT CHECKOUT.."
 git checkout ${BRANCH}
+echo "AFTER GIT CHECKOUT.."
+git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
